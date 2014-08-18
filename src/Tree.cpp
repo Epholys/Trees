@@ -26,7 +26,7 @@ Tree::Tree(unsigned int depth, sf::Vector2f position)
 	param.minSubBranchScale = 0.50f;
 	param.maxSubBranchScale = 0.80f;
 
-	trunk_ = Branch(param, sf::Vector2f(10,100));
+	trunk_ = Branch(param, sf::Vector2f(10,100), sf::Color(101, 40, 0));
 
 	setPosition(position);
 

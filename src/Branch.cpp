@@ -22,7 +22,7 @@ Branch::Branch()
 {
 }
 
-Branch::Branch(const Parameters& param, sf::Vector2f size)
+Branch::Branch(const Parameters& param, sf::Vector2f size, const sf::Color& color)
 	: param_(param)
 	, branch_(size)
 	, children_()
@@ -31,7 +31,7 @@ Branch::Branch(const Parameters& param, sf::Vector2f size)
 
 	setOrigin(size.x / 2.f, size.y);
 
-	branch_.setFillColor(sf::Color::Red);
+	branch_.setFillColor(color);
 }
 
 
@@ -73,18 +73,25 @@ void Branch::createChildren ()
 			
 		for (std::size_t i=0; i<nSubBranch; ++i)
 		{
+			// Determine the size of the next subbranch
 			float subBranchScale = (randInt(param_.minSubBranchScale * 100 - 1,	
 											param_.maxSubBranchScale * 100 + 1)
 									/ 100.f);
-
 			sf::Vector2f subSize = subBranchScale * branch_.getSize();
 
-			Ptr subBranch (new Branch(param_, subSize));
+			// Determine the color of the next subbranch
+			sf::Color color = branch_.getFillColor();
+			sf::Color subColor (color.r + randInt(-3,3),
+								color.g + randInt(-3,3),
+								color.b);
+
+			Ptr subBranch (new Branch(param_, subSize, subColor));
 			
 			subBranch->move(branch_.getSize().x / 2.f, 0.f);
 
 			float angle = randInt(minAngleNextSub-1, maxAngleNextSub+1);
 			subBranch->rotate(angle);
+
 			
 			minAngleNextSub += interval;
 			maxAngleNextSub += interval;
@@ -96,26 +103,7 @@ void Branch::createChildren ()
 	{
 		for (auto& e : children_)
 		{
-			e
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-->createChildren();
+			e->createChildren();
 		}
 	}
 }

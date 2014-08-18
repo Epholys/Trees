@@ -28,7 +28,7 @@ public:
 
 public:
 	Branch();
-	Branch(const Parameters& param, sf::Vector2f size);
+	Branch(const Parameters& param, sf::Vector2f size, const sf::Color& color);
 
 	void createChildren();
 
