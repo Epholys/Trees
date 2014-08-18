@@ -11,6 +11,8 @@ public:
 	Tree(unsigned int depth);
 	Tree(unsigned int depth, sf::Vector2f position);
 
+	void grow();
+
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 private:

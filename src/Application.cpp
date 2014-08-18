@@ -8,7 +8,7 @@ Application::Application()
 	: window_(sf::VideoMode(800, 600), "TREE")
 	, tree_()
 {
-	tree_ = Tree(5, sf::Vector2f(400,550));
+	tree_ = Tree(0, sf::Vector2f(400,550));
 }
 
 
@@ -36,6 +36,10 @@ void Application::run()
 					tree_ = Tree(5, sf::Vector2f(400, 575));
 					break;
 				}
+
+				case sf::Keyboard::Return:
+					tree_.grow();
+					break;
 
 				default:
 					break;

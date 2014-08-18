@@ -19,7 +19,6 @@ Tree::Tree(unsigned int depth, sf::Vector2f position)
 	: trunk_ ()
 {
 	Branch::Parameters param;
-	param.size = sf::Vector2f(10,100);
 	param.minAngle = -65.f;
 	param.maxAngle = 65.f;
 	param.minNSubBranch = 3;
@@ -27,7 +26,7 @@ Tree::Tree(unsigned int depth, sf::Vector2f position)
 	param.minSubBranchScale = 0.50f;
 	param.maxSubBranchScale = 0.80f;
 
-	trunk_ = Branch(param);
+	trunk_ = Branch(param, sf::Vector2f(10,100));
 
 	setPosition(position);
 
@@ -45,4 +44,12 @@ void Tree::draw(sf::RenderTarget &target, sf::RenderStates states) const
 	states.transform = getTransform();
 
 	target.draw(trunk_, states);
+}
+
+
+//------------------------------------------------------------------------------
+
+void Tree::grow()
+{
+	trunk_.createChildren();
 }

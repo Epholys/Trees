@@ -18,7 +18,6 @@ public:
 	{
 		bool checkValidity() const;
 
-		sf::Vector2f size;
 		float minAngle;
 		float maxAngle;
 		unsigned int minNSubBranch;
@@ -29,7 +28,7 @@ public:
 
 public:
 	Branch();
-	Branch(const Parameters& param);
+	Branch(const Parameters& param, sf::Vector2f size);
 
 	void createChildren();
 
