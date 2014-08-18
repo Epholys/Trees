@@ -1,0 +1,33 @@
+#ifndef BRANCH_HPP
+#define BRANCH_HPP
+
+
+#include <memory>
+#include <vector>
+
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+
+class Branch : public sf::Transformable, public sf::Drawable
+{
+public:
+	typedef std::unique_ptr<Branch> Ptr;
+
+public:
+	Branch(sf::Vector2f position, float angle, sf::Vector2f size);
+
+	void createChildren();
+
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+private:
+	virtual	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+
+private:
+	sf::RectangleShape branch_;
+
+	std::vector<Ptr> children_;
+};
+
+
+#endif // BRANCH_HPP

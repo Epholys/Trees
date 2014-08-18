@@ -1,0 +1,6 @@
+#ifndef UTILITY_HPP
+#define UTILITY_HPP
+
+int randInt (int minExclusive, int maxExclusive;
+
+#endif
