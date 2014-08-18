@@ -9,12 +9,13 @@
 class Application
 {
 public:
-	Application ();
+	Application();
 
-	void run ();
+	void run();
 
 private:
-	void render ();
+	void handleEvent();
+	void render();
 
 private:
 	sf::RenderWindow window_;

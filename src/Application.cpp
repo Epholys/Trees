@@ -19,41 +19,47 @@ void Application::run()
 {
 	while(window_.isOpen())
 	{
-		sf::Event event;
-
-		while(window_.pollEvent(event))
-		{
-			if(event.type == sf::Event::Closed)
-			{
-				window_.close();
-			}
-			if(event.type == sf::Event::KeyPressed)
-			{
-				switch(event.key.code)
-				{
-				case sf::Keyboard::Space:
-				{
-					tree_ = Tree(0, sf::Vector2f(400, 575));
-					break;
-				}
-
-				case sf::Keyboard::Return:
-					tree_.grow();
-					break;
-
-				default:
-					break;
-				}
-			}
-		}
+		handleEvent();
 		
 		render();
 	}
 }
 
 
+
 //------------------------------------------------------------------------------
 // *** private function: ***
+
+void Application::handleEvent()
+{
+	sf::Event event;
+
+	while(window_.pollEvent(event))
+	{
+		if(event.type == sf::Event::Closed)
+		{
+			window_.close();
+		}
+		if(event.type == sf::Event::KeyPressed)
+		{
+			switch(event.key.code)
+			{
+			case sf::Keyboard::Space:
+			{
+				tree_ = Tree(0, sf::Vector2f(400, 575));
+				break;
+			}
+
+			case sf::Keyboard::Return:
+				tree_.grow();
+				break;
+
+			default:
+				break;
+			}
+		}
+	}
+}
 
 void Application::render()
 {
