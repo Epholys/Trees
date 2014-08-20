@@ -11,7 +11,7 @@
 #include <SFML/Graphics.hpp>
 
 
-class Node : public sf::Transformable, public sf::Drawable
+class Node : public sf::Transformable, public sf::Drawable, public sf::NonCopyable
 {
 public:
 	typedef std::unique_ptr<Node> Ptr;

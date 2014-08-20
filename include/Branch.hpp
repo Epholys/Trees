@@ -13,8 +13,6 @@ public:
 
 	struct RandomParameters
 	{
-		RandomParameters();
-		RandomParameters(const RandomParameters& param);
 		bool checkValidity() const;
 
 		float minAngle;

@@ -5,25 +5,6 @@
 
 
 //-----------------------------------------------------------------------------
-Branch::RandomParameters::RandomParameters()
-	: minAngle(0)
-	, maxAngle(1)
-	, minNSubBranch(0)
-	, maxNSubBranch(1)
-	, minSubBranchScale(0)
-	, maxSubBranchScale(1)
-{
-}
-
-Branch::RandomParameters::RandomParameters(const RandomParameters& param)
-	: minAngle(param.minAngle)
-	, maxAngle(param.maxAngle)
-	, minNSubBranch(param.minNSubBranch)
-	, maxNSubBranch(param.maxNSubBranch)
-	, minSubBranchScale(param.minSubBranchScale)
-	, maxSubBranchScale(param.maxSubBranchScale)
-{
-}
 
 bool Branch::RandomParameters::checkValidity() const
 {
@@ -32,6 +13,7 @@ bool Branch::RandomParameters::checkValidity() const
 		(minNSubBranch <= maxNSubBranch) &&
 		(minSubBranchScale <= maxSubBranchScale);
 }
+
 
 //------------------------------------------------------------------------------
 // *** constructor: ***
@@ -65,11 +47,7 @@ void Branch::initializeGrowthFunctions()
 {
 	using namespace std::placeholders;
 
-	growthFunctions_.emplace(Node::Branch,
-		[this] ()
-		{ 
-			this->growBranch();
-		});
+	growthFunctions_[Node::Branch] = std::bind(&Branch::growBranch, this);
 }
 
 void Branch::growBranch()
