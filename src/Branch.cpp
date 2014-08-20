@@ -4,7 +4,7 @@
 
 //-----------------------------------------------------------------------------
 
-bool Branch::RandomParameters::checkValidity() const
+bool RandomParameters::checkValidity() const
 {
 	return
 		(minAngle <= maxAngle) &&
@@ -96,16 +96,17 @@ void Branch::growLeaves()
 	sf::Vector2f center (branchBounds.left + branchBounds.width / 2.f,
 						 branchBounds.top + branchBounds.height / 2.f);
 
-	float distanceFromCenter = branch_.getSize().y * 3.f / 4.f;
+	float distanceFromCenter = branch_.getSize().y / 2.f;
 
 	float radius = branch_.getSize().x;
 
 	for(float angle = 0; angle < 2 * PI; angle += radAngle)
 	{
-	   	Leaf::Ptr leaf (new Leaf(param_, radius, sf::Color::Green));
+		Leaf::Ptr leaf (new ::Leaf(radius, sf::Color::Green));
 
 		leaf->move(center.x + distanceFromCenter * std::cos(angle),
 				   center.y + distanceFromCenter * std::sin(angle));
+		leaf->move(-radius / 2.f, -radius / 2.f);
 
 		children_.push_back(std::move(leaf));
 	}

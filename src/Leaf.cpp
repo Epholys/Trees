@@ -4,18 +4,14 @@
 //------------------------------------------------------------------------------
 // *** constructor: ***
 Leaf::Leaf()
-	: param_()
-	, leaf_()
+	: leaf_()
 {
 }
 
-Leaf::Leaf(const Branch::RandomParameters& param, float radius, const sf::Color& color)
-	: param_(param)
-	, leaf_(radius)
+Leaf::Leaf(float radius, const sf::Color& color)
+	: leaf_(radius)
 {
-	assert(param.checkValidity());
-
-	setOrigin(size.x / 2.f, size.y / 2.f);
+	setOrigin(radius / 2.f, radius / 2.f);
 
 	leaf_.setFillColor(color);
 }

@@ -9,22 +9,24 @@
 #include "Node.hpp"
 #include "Leaf.hpp"
 
+struct RandomParameters
+{
+	bool checkValidity() const;
+
+	float minAngle;
+	float maxAngle;
+	unsigned int minNSubBranch;
+	unsigned int maxNSubBranch;
+	float minSubBranchScale;
+	float maxSubBranchScale;
+};
+
+
+
 class Branch : public Node
 {
 public:
 	typedef std::unique_ptr<Branch> Ptr;
-
-	struct RandomParameters
-	{
-		bool checkValidity() const;
-
-		float minAngle;
-		float maxAngle;
-		unsigned int minNSubBranch;
-		unsigned int maxNSubBranch;
-		float minSubBranchScale;
-		float maxSubBranchScale;
-	};
 
 public:
 	Branch();

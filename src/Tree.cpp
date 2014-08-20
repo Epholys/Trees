@@ -18,7 +18,7 @@ Tree::Tree(unsigned int depth)
 Tree::Tree(unsigned int depth, sf::Vector2f position)
 	: trunk_ (nullptr)
 {
-	Branch::RandomParameters param;
+	RandomParameters param;
 	param.minAngle = -65.f;
 	param.maxAngle = 65.f;
 	param.minNSubBranch = 3;

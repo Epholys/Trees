@@ -6,7 +6,6 @@
 
 #include "Node.hpp"
 
-
 class Leaf : public Node
 {
 public:
@@ -14,16 +13,14 @@ public:
 
 public:
 	Leaf();
-	Leaf(const Branch::RandomParameters& param, float radius, const sf::Color& color);
+	Leaf(float radius, const sf::Color& color);
 
 private:
 	virtual	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private:
-	Branch::RandomParameters param_;
-
 	sf::CircleShape leaf_;
 };
 
 
-#endif
+#endif // LEAF_HPP
