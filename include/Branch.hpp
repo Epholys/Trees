@@ -3,19 +3,18 @@
 
 
 #include <cassert>
-#include <memory>
-#include <vector>
 
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
+#include "Node.hpp"
 
-class Branch : public sf::Transformable, public sf::Drawable
+class Branch : public Node
 {
 public:
 	typedef std::unique_ptr<Branch> Ptr;
 
-	struct Parameters
+	struct RandomParameters
 	{
+		RandomParameters();
+		RandomParameters(const RandomParameters& param);
 		bool checkValidity() const;
 
 		float minAngle;
@@ -28,21 +27,18 @@ public:
 
 public:
 	Branch();
-	Branch(const Parameters& param, sf::Vector2f size, const sf::Color& color);
-
-	void createChildren();
-
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	Branch(const RandomParameters& param, sf::Vector2f size, const sf::Color& color);
 
 private:
+	void initializeGrowthFunctions();
+	void growBranch();
+
 	virtual	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private:
-	Parameters param_;
+	RandomParameters param_;
 	
 	sf::RectangleShape branch_;
-
-	std::vector<Ptr> children_;
 };
 
 

@@ -5,7 +5,7 @@
 // *** constructors: ***
 
 Tree::Tree()
-	: Tree(5)
+	: Tree(0)
 {
 }
 
@@ -18,7 +18,7 @@ Tree::Tree(unsigned int depth)
 Tree::Tree(unsigned int depth, sf::Vector2f position)
 	: trunk_ ()
 {
-	Branch::Parameters param;
+	Branch::RandomParameters param;
 	param.minAngle = -65.f;
 	param.maxAngle = 65.f;
 	param.minNSubBranch = 3;
@@ -32,7 +32,7 @@ Tree::Tree(unsigned int depth, sf::Vector2f position)
 
 	for (std::size_t i=0; i<depth; ++i)
 	{
-		trunk_.createChildren();
+		trunk_.createChildren(Node::Branch);
 	}
 }
 
@@ -51,5 +51,5 @@ void Tree::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Tree::grow()
 {
-	trunk_.createChildren();
+	trunk_.createChildren(Node::Branch);
 }
