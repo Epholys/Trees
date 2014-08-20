@@ -4,7 +4,10 @@
 
 #include <cassert>
 
+#include <SFML/Graphics/Rect.hpp>
+
 #include "Node.hpp"
+#include "Leaf.hpp"
 
 class Branch : public Node
 {
@@ -30,6 +33,7 @@ public:
 private:
 	void initializeGrowthFunctions();
 	void growBranch();
+	void growLeaves();
 
 	virtual	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 

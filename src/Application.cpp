@@ -19,7 +19,7 @@ void Application::run()
 {
 	while(window_.isOpen())
 	{
-		handleEvent();
+		handleInput();
 		
 		render();
 	}
@@ -30,7 +30,7 @@ void Application::run()
 //------------------------------------------------------------------------------
 // *** private function: ***
 
-void Application::handleEvent()
+void Application::handleInput()
 {
 	sf::Event event;
 
@@ -51,7 +51,11 @@ void Application::handleEvent()
 			}
 
 			case sf::Keyboard::Return:
-				tree_.grow();
+				tree_.grow(Node::Branch);
+				break;
+
+			case sf::Keyboard::F:
+				tree_.grow(Node::Leaf);
 				break;
 
 			default:

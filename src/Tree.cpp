@@ -50,7 +50,7 @@ void Tree::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 //------------------------------------------------------------------------------
 
-void Tree::grow()
+void Tree::grow(Node::Type type)
 {
-	trunk_->createChildren(Node::Branch);
+	trunk_->createChildren(type);
 }

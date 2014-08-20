@@ -2,8 +2,6 @@
 #include "Branch.hpp"
 
 
-
-
 //-----------------------------------------------------------------------------
 
 bool Branch::RandomParameters::checkValidity() const
@@ -48,6 +46,7 @@ void Branch::initializeGrowthFunctions()
 	using namespace std::placeholders;
 
 	growthFunctions_[Node::Branch] = std::bind(&Branch::growBranch, this);
+	growthFunctions_[Node::Leaf] = std::bind(&Branch::growLeaves, this);
 }
 
 void Branch::growBranch()
@@ -58,7 +57,7 @@ void Branch::growBranch()
 	float minAngleNextSub = param_.minAngle;
 	float maxAngleNextSub = minAngleNextSub + interval;
 			
-	for (std::size_t i=0; i<nSubBranch; ++i)
+	for(unsigned int i=0; i<nSubBranch; ++i)
 	{
 		// Determine the size of the next subbranch
 		float subBranchScale = (randInt(param_.minSubBranchScale * 100 - 1,	
@@ -84,6 +83,32 @@ void Branch::growBranch()
 			
 		children_.push_back(std::move(subBranch));
 	}	
+}
+
+void Branch::growLeaves()
+{
+	const float PI = 3.141592653589793f;
+
+	unsigned int nLeaves = 8;
+
+	float radAngle = 2.f * PI / nLeaves;
+	sf::FloatRect branchBounds = branch_.getLocalBounds();
+	sf::Vector2f center (branchBounds.left + branchBounds.width / 2.f,
+						 branchBounds.top + branchBounds.height / 2.f);
+
+	float distanceFromCenter = branch_.getSize().y * 3.f / 4.f;
+
+	float radius = branch_.getSize().x;
+
+	for(float angle = 0; angle < 2 * PI; angle += radAngle)
+	{
+	   	Leaf::Ptr leaf (new Leaf(param_, radius, sf::Color::Green));
+
+		leaf->move(center.x + distanceFromCenter * std::cos(angle),
+				   center.y + distanceFromCenter * std::sin(angle));
+
+		children_.push_back(std::move(leaf));
+	}
 }
 
 //------------------------------------------------------------------------------

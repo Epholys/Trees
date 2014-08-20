@@ -14,7 +14,7 @@ public:
 	void run();
 
 private:
-	void handleEvent();
+	void handleInput();
 	void render();
 
 private:
