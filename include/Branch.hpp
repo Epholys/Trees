@@ -2,25 +2,11 @@
 #define BRANCH_HPP
 
 
-#include <cassert>
-
 #include <SFML/Graphics/Rect.hpp>
 
+#include "Assertion.hpp"
 #include "Node.hpp"
 #include "Leaf.hpp"
-
-struct RandomParameters
-{
-	bool checkValidity() const;
-
-	float minAngle;
-	float maxAngle;
-	unsigned int minNSubBranch;
-	unsigned int maxNSubBranch;
-	float minSubBranchScale;
-	float maxSubBranchScale;
-};
-
 
 
 class Branch : public Node
@@ -30,18 +16,16 @@ public:
 
 public:
 	Branch();
-	Branch(const RandomParameters& param, sf::Vector2f size, const sf::Color& color);
+	Branch(sf::Vector2f size, const sf::Color& color);
 
 private:
 	void initializeGrowthFunctions();
-	void growBranch();
-	void growLeaves();
+	void growBranch(RandomParameters::SharedPtr params);
+	void growLeaves(RandomParameters::SharedPtr params);
 
 	virtual	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private:
-	RandomParameters param_;
-	
 	sf::RectangleShape branch_;
 };
 

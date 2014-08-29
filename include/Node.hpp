@@ -10,6 +10,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "RandomParameters.hpp"
 
 class Node : public sf::Transformable, public sf::Drawable, public sf::NonCopyable
 {
@@ -18,8 +19,8 @@ public:
 
 	enum Type
 	{
-		None = 0,
-		Branch,
+		None = -1,
+		Branch = 0,
 		Leaf,
 		TypeCount
 	};
@@ -27,7 +28,7 @@ public:
 public:
 	Node();
 
-	virtual void createChildren(Type type);
+	virtual void createChildren(Type type, RandomParameters::SharedPtr params);
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
@@ -36,7 +37,7 @@ private:
 
 protected:
 	std::vector<Ptr> children_;
-	std::map<Type, std::function<void()>> growthFunctions_;
+	std::map<Type, std::function<void(RandomParameters::SharedPtr)>> growthFunctions_;
 };
 
 

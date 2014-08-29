@@ -6,9 +6,8 @@
 
 Application::Application()
 	: window_(sf::VideoMode(800, 600), "TREE")
-	, tree_()
+	, tree_(new Tree(0, sf::Vector2f(400, 575)))
 {
-	tree_ = Tree(0, sf::Vector2f(400,575));
 }
 
 
@@ -45,17 +44,17 @@ void Application::handleInput()
 			switch(event.key.code)
 			{
 			case sf::Keyboard::Space:
-			{
-				tree_ = Tree(0, sf::Vector2f(400, 575));
+			{			   
+				tree_.reset(new Tree(0, sf::Vector2f(400, 575)));
 				break;
 			}
 
 			case sf::Keyboard::Return:
-				tree_.grow(Node::Branch);
+				tree_->grow(Node::Branch);
 				break;
 
 			case sf::Keyboard::F:
-				tree_.grow(Node::Leaf);
+				tree_->grow(Node::Leaf);
 				break;
 
 			default:
@@ -67,7 +66,7 @@ void Application::handleInput()
 
 void Application::render()
 {
-	window_.clear();
-	window_.draw(tree_);
+	window_.clear(sf::Color::White);
+	window_.draw(*tree_);
 	window_.display();
 }

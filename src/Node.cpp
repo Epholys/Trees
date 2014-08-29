@@ -15,21 +15,21 @@ Node::Node()
 //------------------------------------------------------------------------------
 // *** public virtual functions: ***
 
-void Node::createChildren(Type type)
+void Node::createChildren(Type type, RandomParameters::SharedPtr params)
 {
 	if (children_.empty())
 	{
 		auto it = growthFunctions_.find(type);
 		if (it != growthFunctions_.end())
 		{
-			it->second();
+			it->second(std::move(params));
 		}
 	}
 	else
 	{
 		for (auto& elem : children_)
 		{
-			elem->createChildren(type);
+			elem->createChildren(type, params);
 		}
 	}
 }

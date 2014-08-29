@@ -10,7 +10,8 @@ BUGFLAGS :=
 
 TARGET := Trees
 TARGETDIR = ../
-OBJECTS = main.o Application.o Node.o Branch.o Leaf.o Utility.o Tree.o
+OBJECTS = 	main.o Application.o Node.o Branch.o Leaf.o \
+			RandomParameters.o Utility.o Tree.o
 
 empty :=
 space := $(empty) $(empty)

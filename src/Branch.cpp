@@ -2,34 +2,19 @@
 #include "Branch.hpp"
 
 
-//-----------------------------------------------------------------------------
-
-bool RandomParameters::checkValidity() const
-{
-	return
-		(minAngle <= maxAngle) &&
-		(minNSubBranch <= maxNSubBranch) &&
-		(minSubBranchScale <= maxSubBranchScale);
-}
-
-
 //------------------------------------------------------------------------------
 // *** constructor: ***
 
 Branch::Branch()
 	: Node()
-	, param_()
 	, branch_()
 {
 }
 
-Branch::Branch(const RandomParameters& param, sf::Vector2f size, const sf::Color& color)
+Branch::Branch(sf::Vector2f size, const sf::Color& color)
 	: Node()
-	, param_(param)
 	, branch_(size)
 {
-	assert(param.checkValidity());
-
 	setOrigin(size.x / 2.f, size.y);
 
 	branch_.setFillColor(color);
@@ -45,23 +30,30 @@ void Branch::initializeGrowthFunctions()
 {
 	using namespace std::placeholders;
 
-	growthFunctions_[Node::Branch] = std::bind(&Branch::growBranch, this);
-	growthFunctions_[Node::Leaf] = std::bind(&Branch::growLeaves, this);
+	growthFunctions_[Node::Branch] = std::bind(&Branch::growBranch, this, _1);
+	growthFunctions_[Node::Leaf] = std::bind(&Branch::growLeaves, this, _1);
 }
 
-void Branch::growBranch()
+void Branch::growBranch(RandomParameters::SharedPtr params)
 {
-	unsigned int nSubBranch = randInt(param_.minNSubBranch-1, param_.maxNSubBranch+1);
+	assert(std::dynamic_pointer_cast<RandomBranchParameters>(params) != nullptr);
+	RandomBranchParameters randParams =
+		*(std::dynamic_pointer_cast<RandomBranchParameters>(params));
+	assert(randParams.checkValidity());
+	params.reset();
+	
 
-	float interval = (param_.maxAngle - param_.minAngle) / nSubBranch;
-	float minAngleNextSub = param_.minAngle;
+	unsigned int nSubBranch = randInt(randParams.minNSubBranch-1, randParams.maxNSubBranch+1);
+
+	float interval = (randParams.maxAngle - randParams.minAngle) / nSubBranch;
+	float minAngleNextSub = randParams.minAngle;
 	float maxAngleNextSub = minAngleNextSub + interval;
 			
 	for(unsigned int i=0; i<nSubBranch; ++i)
 	{
 		// Determine the size of the next subbranch
-		float subBranchScale = (randInt(param_.minSubBranchScale * 100 - 1,	
-										param_.maxSubBranchScale * 100 + 1)
+		float subBranchScale = (randInt(randParams.minSubBranchScale * 100 - 1,	
+										randParams.maxSubBranchScale * 100 + 1)
 								/ 100.f);
 		sf::Vector2f subSize = subBranchScale * branch_.getSize();
 
@@ -71,7 +63,7 @@ void Branch::growBranch()
 							color.g + randInt(-3,3),
 							color.b);
 
-		Ptr subBranch (new Branch(param_, subSize, subColor));
+		Ptr subBranch (new Branch(subSize, subColor));
 			
 		subBranch->move(branch_.getSize().x / 2.f, 0.f);
 
@@ -85,11 +77,18 @@ void Branch::growBranch()
 	}	
 }
 
-void Branch::growLeaves()
+void Branch::growLeaves(RandomParameters::SharedPtr params)
 {
+	assert(std::dynamic_pointer_cast<RandomLeafParameters>(params) != nullptr);
+	RandomLeafParameters randParams =
+		*(std::dynamic_pointer_cast<RandomLeafParameters>(params));
+	assert(randParams.checkValidity());
+	params.reset();
+
+
 	const float PI = 3.141592653589793f;
 
-	unsigned int nLeaves = 8;
+	unsigned int nLeaves = randInt(randParams.minNLeaves-1, randParams.maxNLeaves+1);
 
 	float radAngle = 2.f * PI / nLeaves;
 	sf::FloatRect branchBounds = branch_.getLocalBounds();

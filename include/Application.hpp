@@ -20,7 +20,7 @@ private:
 private:
 	sf::RenderWindow window_;
 
-	Tree tree_;
+	Tree::Ptr tree_;
 };
 
 

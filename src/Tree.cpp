@@ -2,6 +2,14 @@
 
 
 //------------------------------------------------------------------------------
+// *** initiaize default parameters: ***
+namespace
+{
+	RandomBranchParameters defaultRandBranchParams = initDefaultBranchParams();
+	RandomLeafParameters defaultRandLeafParams = initDefaultLeafParams();
+}
+
+//------------------------------------------------------------------------------
 // *** constructors: ***
 
 Tree::Tree()
@@ -17,23 +25,22 @@ Tree::Tree(unsigned int depth)
 
 Tree::Tree(unsigned int depth, sf::Vector2f position)
 	: trunk_ (nullptr)
+	, randomParams_()
 {
-	RandomParameters param;
-	param.minAngle = -65.f;
-	param.maxAngle = 65.f;
-	param.minNSubBranch = 3;
-	param.maxNSubBranch = 5;
-	param.minSubBranchScale = 0.50f;
-	param.maxSubBranchScale = 0.80f;
+	randomParams_[Node::Branch] =
+		std::make_shared<RandomBranchParameters>(defaultRandBranchParams);
+	randomParams_[Node::Leaf] =
+		std::make_shared<RandomLeafParameters>(defaultRandLeafParams);
 
-	Branch::Ptr trunk(new Branch(param, sf::Vector2f(10,100), sf::Color(101, 40, 0)));
+	Branch::Ptr trunk(new Branch(sf::Vector2f(20,200),
+								 sf::Color(101, 40, 0)));
 	trunk_ = std::move(trunk);
 
 	setPosition(position);
 
 	for (std::size_t i=0; i<depth; ++i)
 	{
-		trunk_->createChildren(Node::Branch);
+		trunk_->createChildren(Node::Branch, randomParams_[Node::Branch]);
 	}
 }
 
@@ -52,5 +59,12 @@ void Tree::draw(sf::RenderTarget &target, sf::RenderStates states) const
 
 void Tree::grow(Node::Type type)
 {
-	trunk_->createChildren(type);
+	
+	grow(type, randomParams_[type]);
+}
+
+
+void Tree::grow(Node::Type type, RandomParameters::SharedPtr params)
+{
+	trunk_->createChildren(type, std::move(params));
 }
