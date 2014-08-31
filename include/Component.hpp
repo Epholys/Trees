@@ -1,5 +1,5 @@
-#ifndef COMPONENT_HPP
-#define COMPONENT_HPP
+#ifndef GUI_COMPONENT_HPP
+#define GUI_COMPONENT_HPP
 
 
 #include <memory>
@@ -29,7 +29,7 @@ namespace GUI
 		virtual void activate();
 		virtual void deactivate();
 		
-		virtual void handleEvent(sf::Event event) =0;
+		virtual void handleEvent(const sf::Event& event) =0;
 
 	private:
 		bool isSelected_;
@@ -38,4 +38,4 @@ namespace GUI
 }
 
 
-#endif // COMPONENT_HPP
+#endif // GUI_COMPONENT_HPP

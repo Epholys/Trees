@@ -13,6 +13,8 @@ struct RandomParameters
 
 struct RandomBranchParameters : public RandomParameters
 {
+	typedef std::shared_ptr<RandomBranchParameters> SharedPtr;
+
 	virtual bool checkValidity() const;
 
 	float minAngle;
@@ -25,6 +27,8 @@ struct RandomBranchParameters : public RandomParameters
 
 struct RandomLeafParameters : public RandomParameters
 {
+	typedef std::shared_ptr<RandomLeafParameters> SharedPtr;
+
 	virtual bool checkValidity() const;
 
 	unsigned int minNLeaves;

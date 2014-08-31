@@ -33,7 +33,7 @@ Tree::Tree(unsigned int depth, sf::Vector2f position)
 		std::make_shared<RandomLeafParameters>(defaultRandLeafParams);
 
 	Branch::Ptr trunk(new Branch(sf::Vector2f(20,200),
-								 sf::Color(101, 40, 0)));
+						  sf::Color(101, 40, 0)));
 	trunk_ = std::move(trunk);
 
 	setPosition(position);
