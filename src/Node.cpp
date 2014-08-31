@@ -3,11 +3,16 @@
 
 
 //------------------------------------------------------------------------------
-// *** constructor: ***
+// *** constructor & destructor: ***
 
 Node::Node()
 	: children_()
 	, growthFunctions_()
+{
+}
+
+
+Node::~Node()
 {
 }
 

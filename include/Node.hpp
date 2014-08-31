@@ -27,6 +27,7 @@ public:
 
 public:
 	Node();
+	virtual ~Node();
 
 	virtual void createChildren(Type type, RandomParameters::SharedPtr params);
 
