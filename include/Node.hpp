@@ -27,8 +27,9 @@ public:
 
 public:
 	Node();
+	virtual ~Node();
 
-	virtual void createChildren(Type type, RandomParameters::SharedPtr params);
+	virtual void createChildren(Type type, RandomParameters::SPtr params);
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
@@ -37,7 +38,7 @@ private:
 
 protected:
 	std::vector<Ptr> children_;
-	std::map<Type, std::function<void(RandomParameters::SharedPtr)>> growthFunctions_;
+	std::map<Type, std::function<void(RandomParameters::SPtr)>> growthFunctions_;
 };
 
 

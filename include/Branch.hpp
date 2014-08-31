@@ -20,8 +20,8 @@ public:
 
 private:
 	void initializeGrowthFunctions();
-	void growBranch(RandomParameters::SharedPtr params);
-	void growLeaves(RandomParameters::SharedPtr params);
+	void growBranch(RandomParameters::SPtr params);
+	void growLeaves(RandomParameters::SPtr params);
 
 	virtual	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 

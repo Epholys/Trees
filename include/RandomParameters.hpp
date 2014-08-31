@@ -6,14 +6,15 @@
 
 struct RandomParameters
 {
-	typedef std::shared_ptr<RandomParameters> SharedPtr;
+	typedef std::shared_ptr<RandomParameters> SPtr;
 	
 	virtual bool checkValidity() const {return false;};
 };
 
 struct RandomBranchParameters : public RandomParameters
 {
-	typedef std::shared_ptr<RandomBranchParameters> SharedPtr;
+
+	typedef std::shared_ptr<RandomBranchParameters> SPtr;
 
 	virtual bool checkValidity() const;
 
@@ -27,7 +28,7 @@ struct RandomBranchParameters : public RandomParameters
 
 struct RandomLeafParameters : public RandomParameters
 {
-	typedef std::shared_ptr<RandomLeafParameters> SharedPtr;
+	typedef std::shared_ptr<RandomLeafParameters> SPtr;
 
 	virtual bool checkValidity() const;
 
