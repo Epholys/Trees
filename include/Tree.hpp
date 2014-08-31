@@ -18,14 +18,12 @@ public:
 	Tree(unsigned int depth, sf::Vector2f position);
 
 	void grow(Node::Type type);
-	void grow(Node::Type type, RandomParameters::SharedPtr params);
+	void grow(Node::Type type, RandomParameters::SPtr params);
 
 	virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
 private:
 	Branch::Ptr trunk_;
-
-	std::array<RandomParameters::SharedPtr, Node::TypeCount> randomParams_;
 };
 
 

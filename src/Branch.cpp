@@ -34,7 +34,7 @@ void Branch::initializeGrowthFunctions()
 	growthFunctions_[Node::Leaf] = std::bind(&Branch::growLeaves, this, _1);
 }
 
-void Branch::growBranch(RandomParameters::SharedPtr params)
+void Branch::growBranch(RandomParameters::SPtr params)
 {
 	assert(std::dynamic_pointer_cast<RandomBranchParameters>(params) != nullptr);
 	RandomBranchParameters randParams =
@@ -77,7 +77,7 @@ void Branch::growBranch(RandomParameters::SharedPtr params)
 	}	
 }
 
-void Branch::growLeaves(RandomParameters::SharedPtr params)
+void Branch::growLeaves(RandomParameters::SPtr params)
 {
 	assert(std::dynamic_pointer_cast<RandomLeafParameters>(params) != nullptr);
 	RandomLeafParameters randParams =

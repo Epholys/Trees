@@ -20,7 +20,7 @@ Node::~Node()
 //------------------------------------------------------------------------------
 // *** public virtual functions: ***
 
-void Node::createChildren(Type type, RandomParameters::SharedPtr params)
+void Node::createChildren(Type type, RandomParameters::SPtr params)
 {
 	if (children_.empty())
 	{
