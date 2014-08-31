@@ -12,22 +12,33 @@ namespace GUI
 		: variable_()
 		, increment_()
 		, backRectangle_()
-		, varText_()
+		, varValue_()
+		, varName_()
 	{
 	}
 
 
 	template <typename T>
-	Slider<T>::Slider(T& var, const T& increment, const sf::Font& font)
+	Slider<T>::Slider(T& var,
+					  const T& increment,
+					  const sf::Font& font,
+					  const std::string& name)
 		: variable_(var)
 		, increment_(increment)
 		, backRectangle_(sf::Vector2f(50.f, 25.f))
-		, varText_(toString(var), font, 20)
+		, varValue_(toString(var), font, 20)
+		, varName_(name, font, 20)
 	{
 		backRectangle_.setFillColor(sf::Color(0, 0, 0, 150));
 		
-		sf::Vector2f position = getPosition();
-		varText_.setPosition(position.x / 2.f, position.y / 2.f);
+
+		sf::Vector2f rectSize = backRectangle_.getSize();
+
+		centerOrigin(varValue_);
+		varValue_.move(rectSize.x / 2.f, 0.f);
+	   
+		varName_.setColor(sf::Color::Black);
+		varName_.move(rectSize.x + 5.f, -5.f);
 	}
 
 //------------------------------------------------------------------------------
@@ -36,6 +47,20 @@ namespace GUI
 	bool Slider<T>::isSelectable()
 	{
 		return true;
+	}
+
+	template<typename T>
+	void Slider<T>::select()
+	{
+		Component::select();
+		backRectangle_.setFillColor(sf::Color(0, 0, 0, 200));
+	}
+
+	template<typename T>	   
+    void Slider<T>::deselect()
+	{
+		Component::deselect();
+		backRectangle_.setFillColor(sf::Color(0, 0, 0, 150));
 	}
 
 	template<typename T>
@@ -57,7 +82,7 @@ namespace GUI
 				break;
 			}
 
-			varText_.setString(toString(variable_));
+			varValue_.setString(toString(variable_));
 		}
 	}
 
@@ -70,6 +95,8 @@ namespace GUI
 		states.transform *= getTransform();
 
 		target.draw(backRectangle_, states);
-		target.draw(varText_, states);
+		target.draw(varValue_, states);
+		target.draw(varName_, states);
 	}
-}
+
+} // namespace GUI

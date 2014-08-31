@@ -19,9 +19,14 @@ namespace GUI
 
 	public:
 		Slider();
-		Slider(T& var, const T& increment, const sf::Font& font);
+		Slider(T& var,
+			   const T& increment,
+			   const sf::Font& font,
+			   const std::string& name);
 		
 		virtual bool isSelectable();
+		virtual void select();
+		virtual void deselect();
 
 		virtual void handleEvent(const sf::Event& event);
 
@@ -32,7 +37,8 @@ namespace GUI
 		T increment_;
 
 		sf::RectangleShape backRectangle_;
-		sf::Text varText_;
+		sf::Text varValue_;
+		sf::Text varName_;
 	};
 
 }

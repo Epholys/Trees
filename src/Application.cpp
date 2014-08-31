@@ -24,11 +24,12 @@ Application::Application()
 		std::make_shared<RandomLeafParameters>(initDefaultLeafParams());
 
 
-	RandomBranchParameters::SharedPtr randBranch =
+	RandomBranchParameters::SPtr randBranch =
 		std::dynamic_pointer_cast<RandomBranchParameters>(randomParams_[Node::Branch]);
 	slider_.reset(new GUI::Slider<unsigned int>(randBranch->maxNSubBranch,
 												1,
-												font_));
+												font_,
+												"MaxNSubBranch"));
 }
 
 

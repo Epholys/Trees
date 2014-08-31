@@ -27,7 +27,7 @@ private:
 	Tree::Ptr tree_;
 	GUI::Slider<unsigned int>::Ptr slider_;
 
-	std::array<RandomParameters::SharedPtr, Node::TypeCount> randomParams_;
+	std::array<RandomParameters::SPtr, Node::TypeCount> randomParams_;
 };
 
 
