@@ -108,4 +108,10 @@ namespace GUI
 		varName_.setString(name);
 	}
 
+	template<typename T>
+	void Slider<T>::updateText()
+	{
+		varValue_.setString(toString(variable_));
+	}
+
 } // namespace GUI

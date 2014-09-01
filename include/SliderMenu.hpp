@@ -14,8 +14,11 @@ namespace GUI
 	class SliderMenu : public Component
 	{
 	public:
+		typedef std::shared_ptr<SliderMenu> SPtr;
+
+	public:
 		SliderMenu();
-		explicit SliderMenu(sf::Font font);
+		explicit SliderMenu(const sf::Font& font);
 
 		virtual bool isSelectable();
 

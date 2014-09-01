@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Tree.hpp"
-#include "Slider.hpp"
+#include "SliderMenu.hpp"
 #include "RandomParameters.hpp"
 
 class Application
@@ -16,6 +16,8 @@ public:
 	void run();
 
 private:
+	void initMenu();
+
 	void handleInput();
 	void render();
 
@@ -25,7 +27,7 @@ private:
 	sf::Font font_;
 
 	Tree::Ptr tree_;
-	GUI::Slider<unsigned int>::SPtr slider_;
+	GUI::SliderMenu::SPtr menu_;
 
 	std::array<RandomParameters::SPtr, Node::TypeCount> randomParams_;
 };

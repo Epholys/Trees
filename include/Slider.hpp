@@ -35,6 +35,7 @@ namespace GUI
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 		void setName(const std::string& name);
+		void updateText();
 
 	private:
 		T& variable_;

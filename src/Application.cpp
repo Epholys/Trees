@@ -4,13 +4,13 @@
 
 
 //------------------------------------------------------------------------------
-// *** constructor: ***
+// *** constructor('s helper): ***
 
 Application::Application()
 	: window_(sf::VideoMode(800, 600), "TREE")
 	, font_()
 	, tree_(new Tree(0, sf::Vector2f(400, 575)))
-	, slider_()
+	, menu_()
 	, randomParams_()
 {
 	if(!font_.loadFromFile("media/font/FORCEDSQUARE.ttf"))
@@ -23,13 +23,16 @@ Application::Application()
 	randomParams_[Node::Leaf] = 
 		std::make_shared<RandomLeafParameters>(initDefaultLeafParams());
 
-
 	RandomBranchParameters::SPtr randBranch =
 		std::dynamic_pointer_cast<RandomBranchParameters>(randomParams_[Node::Branch]);
-	slider_.reset(new GUI::Slider<unsigned int>(randBranch->maxNSubBranch,
-												1,
-												font_,
-												"MaxNSubBranch"));
+
+
+	initMenu();
+}
+
+void Application::initMenu()
+{
+	menu_.reset(new GUI::SliderMenu(font_));
 }
 
 
@@ -84,7 +87,7 @@ void Application::handleInput()
 			}
 		}
 
-		slider_->handleEvent(event);
+		menu_->handleEvent(event);
 	}
 }
 
@@ -92,6 +95,6 @@ void Application::render()
 {
 	window_.clear(sf::Color::White);
 	window_.draw(*tree_);
-	window_.draw(*slider_);
+	window_.draw(*menu_);
 	window_.display();
 }

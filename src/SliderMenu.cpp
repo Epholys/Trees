@@ -14,7 +14,7 @@ namespace GUI
 	{
 	}
 
-	SliderMenu::SliderMenu(sf::Font font)
+	SliderMenu::SliderMenu(const sf::Font& font)
 		: mainSlider_()
 		, index_(0)
 		, hasFirstMenu_(false)
@@ -24,6 +24,7 @@ namespace GUI
 		mainSlider_.reset(new Slider<int>(index_, 1, font, ""));
 
 		menus_.push_back(std::vector<Component::SPtr>(1, mainSlider_));
+		menus_[index_].front()->select();
 		menuNames_[index_] = "";
 	}
 
@@ -76,8 +77,8 @@ namespace GUI
 			}
 			if (it != menus_[index_].end())
 			{
-				(*it)->select();
 				(*itSave)->deselect();
+				(*it)->select();
 			}
 		}
 
@@ -93,8 +94,8 @@ namespace GUI
 			}
 			if (it != menus_[index_].end())
 			{
-				(*it)->select();
 				(*itSave)->deselect();
+				(*it)->select();
 			}
 		}
 
@@ -112,24 +113,25 @@ namespace GUI
 		{
 			switch(event.key.code)
 			{
-			case sf::Keyboard::Up:
+			case sf::Keyboard::Down:
 				selectNextComponent();
 				break;				
 
-			case sf::Keyboard::Down:
+			case sf::Keyboard::Up:
 				selectPreviousComponent();
 				break;
 
 			default:
 				auto it = findComponentSelected();
 				(*it)->handleEvent(event);
+				
+				index_ = index_ % menus_.size();
+				mainSlider_->updateText();
+				
+				mainSlider_->setName(menuNames_[index_]);
 				break;
 			}
 		}
-
-
-		index_ = index_ % menus_.size();
-		mainSlider_->setName(menuNames_[index_]);
 	}
 
 
@@ -139,10 +141,25 @@ namespace GUI
 	{
 		states.transform *= getTransform();
 
-		for(const auto component : menus_[index_])
+		for(const auto& component : menus_[index_])
 		{
 			target.draw(*component, states);
 		}
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
