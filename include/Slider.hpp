@@ -2,6 +2,8 @@
 #define GUI_SLIDER_HPP
 
 
+#include <string>
+
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -15,7 +17,7 @@ namespace GUI
 	class Slider : public Component
 	{
 	public:
-		typedef std::shared_ptr<Slider> Ptr;
+		typedef std::shared_ptr<Slider> SPtr;
 
 	public:
 		Slider();
@@ -31,6 +33,8 @@ namespace GUI
 		virtual void handleEvent(const sf::Event& event);
 
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+		void setName(const std::string& name);
 
 	private:
 		T& variable_;

@@ -12,7 +12,7 @@ TARGET := Trees
 TARGETDIR = ../
 OBJECTS = 	main.o Application.o Node.o Branch.o Leaf.o \
 			RandomParameters.o Utility.o Tree.o \
-			Component.o
+			Component.o SliderMenu.o
 
 empty :=
 space := $(empty) $(empty)

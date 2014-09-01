@@ -25,7 +25,7 @@ private:
 	sf::Font font_;
 
 	Tree::Ptr tree_;
-	GUI::Slider<unsigned int>::Ptr slider_;
+	GUI::Slider<unsigned int>::SPtr slider_;
 
 	std::array<RandomParameters::SPtr, Node::TypeCount> randomParams_;
 };

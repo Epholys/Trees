@@ -99,4 +99,13 @@ namespace GUI
 		target.draw(varName_, states);
 	}
 
+
+//------------------------------------------------------------------------------
+
+	template<typename T>
+	void Slider<T>::setName(const std::string& name)
+	{
+		varName_.setString(name);
+	}
+
 } // namespace GUI
