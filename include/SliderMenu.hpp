@@ -26,9 +26,9 @@ namespace GUI
 
 		virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
-		void addMenu(const std::string& name);
+		int addMenu(const std::string& name);
 		void addComponent(Component::SPtr comp, std::size_t index);
-
+	
 	private:
 		auto findComponentSelected();
 

@@ -16,7 +16,9 @@ public:
 	void run();
 
 private:
-	void initMenu();
+	void initTreeMenu();
+	void initBranchMenu();
+	void initLeafMenu();
 
 	void handleInput();
 	void render();
@@ -26,10 +28,11 @@ private:
 
 	sf::Font font_;
 
+	sf::Vector2f trunkSize_;
 	Tree::Ptr tree_;
-	GUI::SliderMenu::SPtr menu_;
 
 	std::array<RandomParameters::SPtr, Node::TypeCount> randomParams_;
+	GUI::SliderMenu::SPtr menu_;
 };
 
 

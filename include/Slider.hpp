@@ -17,6 +17,7 @@ namespace GUI
 	class Slider : public Component
 	{
 	public:
+		typedef T Type;
 		typedef std::shared_ptr<Slider> SPtr;
 
 	public:
@@ -40,7 +41,7 @@ namespace GUI
 	private:
 		T& variable_;
 		T increment_;
-
+	
 		sf::RectangleShape backRectangle_;
 		sf::Text varValue_;
 		sf::Text varName_;

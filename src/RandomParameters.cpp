@@ -6,14 +6,14 @@
 bool RandomBranchParameters::checkValidity() const
 {
 	return
-		(minAngle <= maxAngle) &&
-		(minNSubBranch <= maxNSubBranch) &&
-		(minSubBranchScale <= maxSubBranchScale);
+		(minAngle >= -180.f) && (maxAngle <= 180.f) && (minAngle <= maxAngle) &&
+		(minNSubBranch > 0) && (minNSubBranch <= maxNSubBranch) &&
+		(minSubBranchScale > 0.f) && (minSubBranchScale <= maxSubBranchScale);
 }
 
 bool RandomLeafParameters::checkValidity() const
 {
-	return (minNLeaves <= maxNLeaves);
+	return (minNLeaves > 0) && (minNLeaves <= maxNLeaves);
 }
 
 

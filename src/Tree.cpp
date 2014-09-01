@@ -24,12 +24,11 @@ Tree::Tree(unsigned int depth)
 }
 
 
-Tree::Tree(unsigned int depth, sf::Vector2f position)
+Tree::Tree(unsigned int depth, sf::Vector2f position, sf::Vector2f size)
 	: trunk_ (nullptr)
 {
 
-	Branch::Ptr trunk(new Branch(sf::Vector2f(20,200),
-						  sf::Color(101, 40, 0)));
+	Branch::Ptr trunk(new Branch(size, sf::Color(101, 40, 0)));
 	trunk_ = std::move(trunk);
 
 	setPosition(position);

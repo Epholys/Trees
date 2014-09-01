@@ -15,7 +15,7 @@ public:
 public:
 	Tree();
 	Tree(unsigned int depth);
-	Tree(unsigned int depth, sf::Vector2f position);
+	Tree(unsigned int depth, sf::Vector2f position, sf::Vector2f size = sf::Vector2f(20, 200));
 
 	void grow(Node::Type type);
 	void grow(Node::Type type, RandomParameters::SPtr params);

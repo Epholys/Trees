@@ -114,4 +114,5 @@ namespace GUI
 		varValue_.setString(toString(variable_));
 	}
 
+
 } // namespace GUI

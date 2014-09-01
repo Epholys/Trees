@@ -31,73 +31,82 @@ namespace GUI
 
 //------------------------------------------------------------------------------
 
-	void SliderMenu::addMenu(const std::string& name)
+	int SliderMenu::addMenu(const std::string& name)
 	{
 		if(!hasFirstMenu_)
 		{
 			menuNames_[index_] = name;
 			hasFirstMenu_ = true;
+			mainSlider_->setName(menuNames_[index_]);
+			return index_;
 		}
 		else
 		{
 			menus_.push_back(std::vector<Component::SPtr>(1, mainSlider_));
 			menuNames_[menus_.size()-1] = name;
+			return menus_.size()-1;
 		}
 	}
 
 	void SliderMenu::addComponent(Component::SPtr comp, std::size_t index)
 	{
 		assert(index < menus_.size());
+
+		// Here is the Slider-dependent magic variable
+		comp->move(0.f, 25.f * menus_[index].size());
+
 		menus_[index].push_back(comp);
 	}
 
 //------------------------------------------------------------------------------
 
 
-		auto SliderMenu::findComponentSelected()
+	auto SliderMenu::findComponentSelected()
+	{
+		auto it = std::find_if(menus_[index_].begin(),
+							   menus_[index_].end(),
+							   [](Component::SPtr comp)
+							   {
+								   return comp->isSelected();
+							   });
+		assert(it != menus_[index_].end());
+
+		return it;
+	}
+
+	void SliderMenu::selectNextComponent()
+	{
+		auto it = findComponentSelected();
+		auto itSave = it;
+			
+		do
 		{
-			auto it = std::find_if(menus_[index_].begin(),
-								   menus_[index_].end(),
-								   [](Component::SPtr comp)
-								   {
-									   return comp->isSelected();
-								   });
-			assert(it != menus_[index_].end());
-
-			return it;
-		}
-
-		void SliderMenu::selectNextComponent()
+			++it;
+		}while (it != menus_[index_].end() && !((*it)->isSelectable()));
+			
+		if (it != menus_[index_].end())
 		{
-			auto it = findComponentSelected();
-			auto itSave = it;
-			while (it != menus_[index_].end() && !((*it)->isSelectable()))
-			{
-				++it;
-			}
-			if (it != menus_[index_].end())
-			{
-				(*itSave)->deselect();
-				(*it)->select();
-			}
+			(*itSave)->deselect();
+			(*it)->select();
 		}
+	}
 
-		void SliderMenu::selectPreviousComponent()
+	void SliderMenu::selectPreviousComponent()
+	{
+		auto it = findComponentSelected();
+		auto itSave = it;
+
+		do
 		{
-			auto it = findComponentSelected();
-			auto itSave = it;
-
-			// The first element is always mainSlider_, which is selectable
-			while (!((*it)->isSelectable()))
-			{
-				--it;
-			}
-			if (it != menus_[index_].end())
-			{
-				(*itSave)->deselect();
-				(*it)->select();
-			}
+			--it;
+		}while (it != menus_[index_].begin()-1 && !((*it)->isSelectable()));
+ 
+		if (it != menus_[index_].begin() -1)
+		{
+			(*itSave)->deselect();
+			(*it)->select();
 		}
+	}
 
 
 //------------------------------------------------------------------------------
