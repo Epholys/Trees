@@ -1,3 +1,6 @@
+//
+#include<iostream>
+//
 #include <stdexcept>
 
 #include "Application.hpp"
@@ -8,6 +11,7 @@
 
 Application::Application()
 	: window_(sf::VideoMode(800, 600), "TREE")
+	, view_(sf::FloatRect(0,0, 800, 600))
 	, font_()
 	, trunkSize_(sf::Vector2f(20, 200))
 	, tree_(new Tree(0, sf::Vector2f(400, 575), trunkSize_))
@@ -115,7 +119,7 @@ void Application::handleInput()
 		{
 			window_.close();
 		}
-		if(event.type == sf::Event::KeyPressed)
+		else if(event.type == sf::Event::KeyPressed)
 		{
 			switch(event.key.code)
 			{
@@ -143,6 +147,25 @@ void Application::handleInput()
 				break;
 			}
 		}
+		else if(event.type == sf::Event::MouseWheelMoved)
+		{
+			auto delta = event.mouseWheel.delta;
+			if(delta>0)
+			{
+				view_.zoom(0.9f);
+			}
+			else if(delta<0)
+			{
+				view_.zoom(1.1f);
+			}
+		}
+		else if(event.type == sf::Event::MouseButtonPressed)
+		{
+			if(event.mouseButton.button == sf::Mouse::Left)
+			{
+				view_.setCenter(sf::Vector2f(sf::Mouse::getPosition(window_)));
+			}
+		}
 
 		menu_->handleEvent(event);
 		for(const auto& param : randomParams_)
@@ -154,7 +177,12 @@ void Application::handleInput()
 void Application::render()
 {
 	window_.clear(sf::Color::White);
+
+	window_.setView(view_);
 	window_.draw(*tree_);
+
+	window_.setView(window_.getDefaultView());
 	window_.draw(*menu_);
+
 	window_.display();
 }

@@ -25,6 +25,7 @@ private:
 
 private:
 	sf::RenderWindow window_;
+	sf::View view_;
 
 	sf::Font font_;
 
