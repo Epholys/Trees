@@ -102,9 +102,11 @@ void Branch::growLeaves(RandomParameters::SPtr params)
 
 	float radius = branch_.getSize().x;
 
+	sf::Color color (0, randInt(99,161), 0);
+
 	for(float angle = 0; angle < 2 * PI; angle += radAngle)
 	{
-		Leaf::Ptr leaf (new ::Leaf(radius, sf::Color::Green));
+		Leaf::Ptr leaf (new ::Leaf(radius, color));
 
 		leaf->move(center.x + distanceFromCenter * std::cos(angle),
 				   center.y + distanceFromCenter * std::sin(angle));

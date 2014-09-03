@@ -14,6 +14,8 @@ Leaf::Leaf(float radius, const sf::Color& color)
 	setOrigin(radius / 2.f, radius / 2.f);
 
 	leaf_.setFillColor(color);
+	leaf_.setOutlineColor(sf::Color(color.r, color.g-10, color.b));
+	leaf_.setOutlineThickness(0.5f);
 }
 
 
