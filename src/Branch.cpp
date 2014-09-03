@@ -18,7 +18,10 @@ Branch::Branch(sf::Vector2f size, const sf::Color& color)
 	setOrigin(size.x / 2.f, size.y);
 
 	branch_.setFillColor(color);
-
+	branch_.setOutlineColor(sf::Color(color.r - 10,
+									  color.g - 10,
+									  color.b));
+	branch_.setOutlineThickness(1.f);
 	initializeGrowthFunctions();
 }
 
