@@ -9,6 +9,7 @@
 Application::Application()
 	: window_(sf::VideoMode(800, 600), "TREE")
 	, view_(sf::FloatRect(0,0, 800, 600))
+	, mousePosition_(sf::Mouse::getPosition(window_))
 	, font_()
 	, trunkSize_(sf::Vector2f(20, 200))
 	, tree_(new Tree(0, sf::Vector2f(400, 575), trunkSize_))
@@ -102,10 +103,10 @@ void Application::run()
 void Application::handleInput()
 {
 	sf::Event event;
+
 	/* Everything about revertEvent is a disgusting hack not to worry about
 	 * the menu_ messing up with randomParams_'s validity
 	 */
-
 	sf::Event revertEvent;
 
 	while(window_.pollEvent(event))
@@ -156,25 +157,31 @@ void Application::handleInput()
 				view_.zoom(1.1f);
 			}
 		}
-		else if(event.type == sf::Event::MouseButtonPressed)
+		else if(event.type == sf::Event::MouseButtonPressed &&
+				event.mouseButton.button == sf::Mouse::Left)
 		{
-			if(event.mouseButton.button == sf::Mouse::Left)
-			{
-				view_.setCenter(sf::Vector2f(sf::Mouse::getPosition(window_)));
-			}
+			mousePosition_ = sf::Mouse::getPosition(window_);
 		}
+
 
 		menu_->handleEvent(event);
 		for(const auto& param : randomParams_)
 			if(!param->checkValidity())
 				menu_->handleEvent(revertEvent);
 	}
+
+	if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		sf::Vector2i newMousePosition = sf::Mouse::getPosition(window_);
+		sf::Vector2i mouseDelta = mousePosition_ - newMousePosition;
+		view_.move(sf::Vector2f(mouseDelta));
+		mousePosition_ = newMousePosition;
+	}
+	
 }
 
 void Application::render()
 {
-	window_.clear(sf::Color::White);
-
 	window_.setView(view_);
 	window_.draw(*tree_);
 
@@ -182,4 +189,7 @@ void Application::render()
 	window_.draw(*menu_);
 
 	window_.display();
+	window_.clear(sf::Color::White);
+
+
 }

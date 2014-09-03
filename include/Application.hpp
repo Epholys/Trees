@@ -26,6 +26,7 @@ private:
 private:
 	sf::RenderWindow window_;
 	sf::View view_;
+	sf::Vector2i mousePosition_;
 
 	sf::Font font_;
 
