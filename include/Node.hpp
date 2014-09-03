@@ -35,6 +35,7 @@ public:
 
 private:
 	virtual	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual bool isOutOfView(sf::RenderTarget& target, sf::RenderStates states) const =0;
 
 protected:
 	std::vector<Ptr> children_;

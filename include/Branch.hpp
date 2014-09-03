@@ -24,6 +24,7 @@ private:
 	void growLeaves(RandomParameters::SPtr params);
 
 	virtual	void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual bool isOutOfView(sf::RenderTarget& target, sf::RenderStates states) const;
 
 private:
 	sf::RectangleShape branch_;

@@ -118,3 +118,19 @@ void Branch::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) cons
 {
 	target.draw(branch_, states);
 }
+
+bool Branch::isOutOfView(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	sf::View view = target.getView();
+	sf::Vector2f center = view.getCenter();
+	sf::Vector2f size = view.getSize();
+	sf::FloatRect viewRect (center.x - size.x / 2.f,
+							center.y - size.y / 2.f,
+							size.x,
+							size.y);
+
+	sf::FloatRect rect = branch_.getGlobalBounds();
+	rect = states.transform.transformRect(rect);
+
+	return !viewRect.intersects(rect);
+}

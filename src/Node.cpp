@@ -47,7 +47,10 @@ void Node::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();
 
-	drawCurrent(target, states);
+	if(!isOutOfView(target, states))
+	{
+		drawCurrent(target, states);
+	}
 
 	for (const auto& e : children_)
 	{
