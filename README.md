@@ -1,7 +1,7 @@
 # Trees
 ## A Random Tree Generator in C++14 and SFML2.1
 
-![Image](../blob/master/media/screenshot/example.png?raw=true)
+![Image](../master/media/screenshot/example.png?raw=true)
 
 ### Features
 
