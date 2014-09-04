@@ -1,3 +1,6 @@
+//
+#include <iostream>
+//
 #include <stdexcept>
 
 #include "Application.hpp"
@@ -174,7 +177,10 @@ void Application::handleInput()
 	{
 		sf::Vector2i newMousePosition = sf::Mouse::getPosition(window_);
 		sf::Vector2i mouseDelta = mousePosition_ - newMousePosition;
-		view_.move(sf::Vector2f(mouseDelta));
+	
+		float zoom = view_.getSize().x / window_.getSize().x;
+
+		view_.move(sf::Vector2f(mouseDelta) * zoom);
 		mousePosition_ = newMousePosition;
 	}
 	
