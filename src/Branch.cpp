@@ -98,14 +98,17 @@ void Branch::growLeaves(RandomParameters::SPtr params)
 	sf::Vector2f center (branchBounds.left + branchBounds.width / 2.f,
 						 branchBounds.top + branchBounds.height / 2.f);
 
-	float distanceFromCenter = branch_.getSize().y / 2.f;
+	sf::Vector2f branchSize = branch_.getSize();
 
-	float radius = branch_.getSize().x;
 
 	sf::Color color (0, randInt(99,161), 0);
 
 	for(float angle = 0; angle < 2 * PI; angle += radAngle)
 	{
+		float distanceFromCenter = randInt(-1, branchSize.y / 2.f + 1);
+
+		float radius = randInt(branchSize.x / 2.f * 100, 2 * branchSize.x * 100) / 100.f;
+
 		Leaf::Ptr leaf (new ::Leaf(radius, color));
 
 		leaf->move(center.x + distanceFromCenter * std::cos(angle),
