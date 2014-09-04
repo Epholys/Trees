@@ -1,6 +1,3 @@
-//
-#include <iostream>
-//
 #include <stdexcept>
 
 #include "Application.hpp"
@@ -13,6 +10,7 @@ Application::Application()
 	: window_(sf::VideoMode(800, 600), "TREE")
 	, view_(sf::FloatRect(0,0, 800, 600))
 	, mousePosition_(sf::Mouse::getPosition(window_))
+	, isPaused_(false)
 	, font_()
 	, trunkSize_(sf::Vector2f(20, 200))
 	, tree_(new Tree(0, sf::Vector2f(400, 575), trunkSize_))
@@ -165,7 +163,14 @@ void Application::handleInput()
 		{
 			mousePosition_ = sf::Mouse::getPosition(window_);
 		}
-
+		else if(event.type == sf::Event::GainedFocus)
+		{
+			isPaused_ = false;
+		}
+		else if(event.type == sf::Event::LostFocus)
+		{
+			isPaused_ = true;
+		}
 
 		menu_->handleEvent(event);
 		for(const auto& param : randomParams_)
@@ -173,17 +178,24 @@ void Application::handleInput()
 				menu_->handleEvent(revertEvent);
 	}
 
-	if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if(!isPaused_ &&
+	   sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		sf::Vector2i newMousePosition = sf::Mouse::getPosition(window_);
-		sf::Vector2i mouseDelta = mousePosition_ - newMousePosition;
-	
-		float zoom = view_.getSize().x / window_.getSize().x;
 
-		view_.move(sf::Vector2f(mouseDelta) * zoom);
-		mousePosition_ = newMousePosition;
-	}
+		if(newMousePosition.y > 0 &&
+		   newMousePosition.y < window_.getSize().y &&
+		   newMousePosition.x > 0 &&
+		   newMousePosition.x < window_.getSize().x)
+		{
+			sf::Vector2i mouseDelta = mousePosition_ - newMousePosition;
 	
+			float zoom = view_.getSize().x / window_.getSize().x;
+
+			view_.move(sf::Vector2f(mouseDelta) * zoom);
+			mousePosition_ = newMousePosition;
+	   }
+	}	
 }
 
 void Application::render()

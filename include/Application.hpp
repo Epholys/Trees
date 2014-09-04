@@ -27,6 +27,7 @@ private:
 	sf::RenderWindow window_;
 	sf::View view_;
 	sf::Vector2i mousePosition_;
+	bool isPaused_;
 
 	sf::Font font_;
 
