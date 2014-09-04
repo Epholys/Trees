@@ -103,11 +103,17 @@ void Branch::growLeaves(RandomParameters::SPtr params)
 
 	sf::Color color (0, randInt(99,161), 0);
 
-	for(float angle = 0; angle < 2 * PI; angle += radAngle)
+	for(float angle = -PI / 2.f; angle < 3 * PI / 2.f; angle += radAngle)
 	{
 		float distanceFromCenter = randInt(-1, branchSize.y / 2.f + 1);
 
 		float radius = randInt(branchSize.x / 2.f * 100, 2 * branchSize.x * 100) / 100.f;
+
+		// Some hack not to leave the up extremity of the branch visible
+		if(angle < -PI/2.f + radAngle)
+		{
+			distanceFromCenter = branchSize.y / 2.f;
+		}
 
 		Leaf::Ptr leaf (new ::Leaf(radius, color));
 
