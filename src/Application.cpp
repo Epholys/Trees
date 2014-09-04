@@ -7,7 +7,8 @@
 // *** constructor('s helper): ***
 
 Application::Application()
-	: window_(sf::VideoMode(800, 600), "TREE")
+	: window_(sf::VideoMode(800, 600), "TREE", sf::Style::Default,
+			  sf::ContextSettings(0,0,4,2,0))
 	, view_(sf::FloatRect(0,0, 800, 600))
 	, mousePosition_(sf::Mouse::getPosition(window_))
 	, isPaused_(false)
